@@ -14,8 +14,8 @@ class ManifestService
     public function generate()
     {
         $basicManifest =  [
-            'name' => config('laravelpwa.manifest.name'),
-            'short_name' => config('laravelpwa.manifest.short_name'),
+            'name' => trans(config('laravelpwa.manifest.name')),
+            'short_name' => trans(config('laravelpwa.manifest.short_name')),
             'start_url' => asset(config('laravelpwa.manifest.start_url')),
             'display' => config('laravelpwa.manifest.display'),
             'theme_color' => config('laravelpwa.manifest.theme_color'),
@@ -64,7 +64,10 @@ class ManifestService
         }
 
         foreach (config('laravelpwa.manifest.custom') as $tag => $value) {
-             $basicManifest[$tag] = $value;
+            if ($tag === 'description') {
+                $value = trans($value);
+            }
+            $basicManifest[$tag] = $value;
         }
         return $basicManifest;
     }
